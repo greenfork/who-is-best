@@ -1,6 +1,6 @@
 <%= form_tag web_show_path, method: :get do %>
     <%= label_tag :repository, 'Paste the Github repository here!' %>
-    <%= text_field_tag :repository, '', class: 'u-full-width',
+    <%= url_field_tag :repository, '', class: 'u-full-width',
     placeholder: 'e.g. https://github.com/rails/rails' %>
     <%= submit_tag 'Search' %>
 <% end %>
