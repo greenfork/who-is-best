@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WhoIsBest</title>
+    <title>Who Is Best?</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,9 @@
   </head>
 
   <body>
-    <%= yield %>
+      <div class="container">
+          <%= render 'layouts/header' %>
+          <%= yield %>
+      </div>
   </body>
 </html>
