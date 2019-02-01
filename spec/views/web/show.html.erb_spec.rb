@@ -19,8 +19,8 @@ RSpec.describe 'web/show.html.erb', type: :view do
     it 'has a name and a link for every contributor' do
       render
       names.zip(urls).each do |name, url|
-        expect(rendered).to match(/#{name}/)
-        expect(rendered).to match(/#{url}/)
+        expect(rendered).to match(name)
+        expect(rendered).to match(url)
       end
     end
 
