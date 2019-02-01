@@ -1,2 +1,22 @@
-<h1>Web#show</h1>
-<p>Find me in app/views/web/show.html.erb</p>
+<div class="centered">
+    <%= render 'form' %>
+</div>
+
+<% if @contributors.blank? %>
+    <p>Sorry, it looks like this is the wrong link!</p>
+<% else %>
+    <p>
+        Done! You can also download the special certificates that acknowledge the true
+        bestness of these beings. Here are the 3 best contributors for this repo:
+    </p>
+    <% @contributors.each do |c| %>
+        <div class="row">
+            <div class="three columns">
+                <%= c[:name] %>
+            </div>
+            <div class="nine columns">
+                <%= link_to 'Certificate.pdf', c[:url] %>
+            </div>
+        </div>
+    <% end %>
+<% end %>
