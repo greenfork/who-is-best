@@ -3,11 +3,15 @@ class WebController < ApplicationController
   end
 
   def show
-    @url = 'https://github.com'
     contribs_stub
+    @url = url_params[:repository]
   end
 
   private
+
+  def url_params
+    params.permit(:repository)
+  end
 
   def contribs_stub
     @contributors = [{ name: 'me', filename: 'me.pdf' },
