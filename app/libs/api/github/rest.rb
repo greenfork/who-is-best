@@ -24,7 +24,7 @@ module Api
         @url = BASE_URL + slash + repo
         @headers = { accept: ACCEPT }
         unless oauth_token.blank?
-          @headers.merge!(authorization: "token #{oauth_token}")
+          @headers[:authorization] = "token #{oauth_token}"
         end
       end
 
