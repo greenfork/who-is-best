@@ -6,6 +6,7 @@ RSpec.describe Api::Github::Rest do
   context 'with valid repository address' do
     let(:repo) { 'ruby/ruby' }
     let(:get_response) { file_fixture('rest_response.json').read }
+    # 3 contributors with the highest number of commits
     let(:contribs) { %w[rafaelfranca tenderlove dhh] }
 
     context 'and with OAuth token' do
