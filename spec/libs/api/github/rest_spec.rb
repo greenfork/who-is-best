@@ -17,14 +17,14 @@ RSpec.describe Api::Github::Rest do
 
       it 'returns at most 3 names of most active contributors' do
         client = class_double('RestClient', get: get_response)
-        rs = described_class.new(repo, oauth_token, client).contributors(3)
+        rs = described_class.new(repo, oauth_token, client).contributors
         expect(rs).to eq(contribs)
       end
 
       it 'sends correct params to RestClient gem' do
         client = class_double('RestClient', get: '[{"login": "me"}]')
         expect(client).to receive(:get).with(contrib_url, headers)
-        described_class.new(repo, oauth_token, client).contributors(3)
+        described_class.new(repo, oauth_token, client).contributors
       end
     end
 
@@ -34,14 +34,14 @@ RSpec.describe Api::Github::Rest do
 
       it 'returns at most 3 names of most active contributors' do
         client = class_double('RestClient', get: get_response)
-        rs = described_class.new(repo, oauth_token, client).contributors(3)
+        rs = described_class.new(repo, oauth_token, client).contributors
         expect(rs).to eq(contribs)
       end
 
       it 'sends correct params to RestClient gem' do
         client = class_double('RestClient', get: '[{"login": "me"}]')
         expect(client).to receive(:get).with(contrib_url, headers)
-        described_class.new(repo, oauth_token, client).contributors(3)
+        described_class.new(repo, oauth_token, client).contributors
       end
     end
   end
@@ -52,8 +52,8 @@ RSpec.describe Api::Github::Rest do
     it 'returns nil' do
       client = class_double('RestClient', get: nil)
       rest = described_class.new(repo, nil, client)
-      expect { rest.contributors(3) }.not_to raise_error
-      expect(rest.contributors(3)).to be_nil
+      expect { rest.contributors }.not_to raise_error
+      expect(rest.contributors).to be_nil
     end
   end
 end
