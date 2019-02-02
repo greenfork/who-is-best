@@ -28,7 +28,7 @@ module Api
         end
       end
 
-      # Prints +number+ names of the most active contributors.
+      # Prints at most +number+ names of the most active contributors.
       def contributors(number)
         url = @url + CONTRIBS_PATH
         response = @client.get(url, @headers)
