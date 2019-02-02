@@ -28,11 +28,14 @@ module Api
         end
       end
 
-      # Prints at most +number+ names of the most active contributors.
-      def contributors(number)
+      # Prints at most +number+ names of the most active contributors,
+      # 3 by default. On any exception returns +nil+.
+      def contributors(number = 3)
         url = @url + CONTRIBS_PATH
         response = @client.get(url, @headers)
         JSON.parse(response)[0...number].map { |h| h['login'] }
+      rescue
+        nil
       end
     end
   end
