@@ -8,6 +8,7 @@ RSpec.describe Api::Github::Rest do
     let(:get_response) { file_fixture('rest_response.json').read }
     # 3 contributors with the highest number of commits
     let(:contribs) { %w[rafaelfranca tenderlove dhh] }
+    let(:client) { class_double('RestClient', get: get_response) }
 
     context 'and with OAuth token' do
       let(:oauth_token) { 'qwertyuioasdfgh' }
@@ -17,13 +18,11 @@ RSpec.describe Api::Github::Rest do
       end
 
       it 'returns at most 3 names of most active contributors' do
-        client = class_double('RestClient', get: get_response)
         rs = described_class.new(repo, oauth_token, client).contributors
         expect(rs).to eq(contribs)
       end
 
       it 'sends correct params to RestClient gem' do
-        client = class_double('RestClient', get: '[{"login": "me"}]')
         expect(client).to receive(:get).with(contrib_url, headers)
         described_class.new(repo, oauth_token, client).contributors
       end
@@ -34,13 +33,11 @@ RSpec.describe Api::Github::Rest do
       let(:headers) { { accept: 'application/vnd.github.v3+json' } }
 
       it 'returns at most 3 names of most active contributors' do
-        client = class_double('RestClient', get: get_response)
         rs = described_class.new(repo, oauth_token, client).contributors
         expect(rs).to eq(contribs)
       end
 
       it 'sends correct params to RestClient gem' do
-        client = class_double('RestClient', get: '[{"login": "me"}]')
         expect(client).to receive(:get).with(contrib_url, headers)
         described_class.new(repo, oauth_token, client).contributors
       end
