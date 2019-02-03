@@ -6,15 +6,29 @@ you can send them their personal certificates of being the bestest.
 
 ## Prerequisites
 
-Ruby v2.5+
+* Ruby v2.5+
+
+* Docker (optionally)
 
 ## Development
+Start developing with this:
 
 ``` shell
 $ git clone https://github.com/greenfork/who-is-bestest.git
+$ cd who-is-bestest
 $ bundle
 $ rails spec
-$ rails server
+$ rails server # visit localhost:3000
+```
+
+Or you can alternatively use docker:
+
+``` shell
+$ git clone https://github.com/greenfork/who-is-bestest.git
+$ cd who-is-bestest
+$ docker build -t who-is-bestest-img .
+$ docker run --rm who-is-bestest-img rspec
+$ docker run --rm -it -p 3000:3000 who-is-bestest-img # visit localhost:3000
 ```
 
 ## License
