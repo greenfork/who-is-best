@@ -39,6 +39,7 @@ end
 
 group :test do
   gem 'rails-controller-testing'
+  gem 'capybara', '~> 3.13'
 end
 
 group :production do
