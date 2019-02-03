@@ -11,20 +11,26 @@ module Pdf
       # a stream with this PDF file.
       #
       # * +name+ - This string will appear in the center of the certificate.
+      #
       # * +number+ - This string will appear in the center of the certificate
       #   prepended with a '#' sign.
+      #
       # * +filename+ - The path and name of the file when +as_file+
       #   option is specified.
+      #
       # * +as_file+ - If this is set to true, then the function returns
       #   +nil+ and the file with +filename+ is generated. If this is set
       #   to false, then the function returns the stream and no file is
       #   generated. True by default.
+      #
       # * +font+ - Path to the font or one of the standard fonts defined
       #   for PDF format like 'Helvetica', 'Courier', etc. Defaults to
       #   +FONT_PATH+.
+      #
       # * +page_size+ - This string describes the page size using a
       #   name of the standard format such as 'LETTER', 'A4', etc.
       #   Defaults to +PAGE_SIZE+.
+      #
       # * +page_layout+ - This symbol describes the page layout and can
       #   be either +:portrait+ or +:landscape+. Defaults to +PAGE_LAYOUT+.
 

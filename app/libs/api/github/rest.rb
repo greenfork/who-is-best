@@ -24,6 +24,7 @@ module Api
       # Throws:
       # * +InvalidOAuthToken+ - If +oauth_token+ can not be used
       #   for authorization.
+      #
       # * +InvalidRepository+ - When the repository can not be found.
 
       def initialize(repo, oauth_token = nil, client = RestClient)
