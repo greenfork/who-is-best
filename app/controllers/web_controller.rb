@@ -3,15 +3,21 @@ class WebController < ApplicationController
   TMP_DIR = '/tmp'.freeze
 
   def index
+    reset_session
   end
 
   def show
-    contribs_stub
-    @url = url_params[:repository]
-    @contributors.each_with_index do |hash, index|
-      Pdf::Certificate.generate(hash[:name], index + 1,
-                                filename: File.join(TMP_DIR, hash[:filename]))
+    # Store @contributors for every session in order to cache
+    # the query sent to the specified github repository.
+    if session[:search_url] == url_params[:repository]
+      @contributors = session[:contributors].map(&:symbolize_keys)
+    else
+      @contributors = search_contributors
+      session[:contributors] = @contributors
+      session[:search_url] = url_params[:repository]
     end
+
+    @url = url_params[:repository]
   end
 
   def download
@@ -40,9 +46,9 @@ class WebController < ApplicationController
     path
   end
 
-  def contribs_stub
-    @contributors = [{ name: 'me', filename: 'me.pdf' },
-                     { name: 'mi', filename: 'mi.pdf' },
-                     { name: 'mo', filename: 'mo.pdf' }]
+  def search_contributors
+    [{ name: 'me' },
+     { name: 'mi' },
+     { name: 'mo' }]
   end
 end

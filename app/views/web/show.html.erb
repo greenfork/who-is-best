@@ -15,7 +15,7 @@
                 <%= c[:name] %>
             </div>
             <div class="nine columns">
-                <%= link_to 'Certificate.pdf', download_path(c[:filename]),
+                <%= link_to c[:name] + '.pdf', download_path(c[:name]),
                     data: { turbolinks: false } %>
             </div>
         </div>
