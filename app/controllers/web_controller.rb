@@ -4,6 +4,7 @@ class WebController < ApplicationController
   class InvalidName < RuntimeError; end
   class SessionMissing < RuntimeError; end
   class InvalidRepository < RuntimeError; end
+  class InvalidOAuthToken < RuntimeError; end
 
   def index
     reset_session
@@ -18,9 +19,14 @@ class WebController < ApplicationController
       @contributors = session[:contributors]
     else
       begin
-        @contributors = search_contributors(repo)
+        @contributors = search_contributors(repo, ENV['GITHUB_OAUTH_TOKEN'])
       rescue InvalidRepository
         @contributors = []
+      rescue InvalidOAuthToken
+        logger.warn 'GITHUB_OAUTH_TOKEN environment variable can not be used' +
+                    ' for authentication to Github API. Please, fix it' +
+                    ' or request a new one.'
+        @contributors = search_contributors(repo)
       else
         session[:contributors] = @contributors
         session[:search_url] = repo
@@ -72,7 +78,7 @@ class WebController < ApplicationController
     name_and_number
   end
 
-  def search_contributors(url)
+  def search_contributors(url, oauth_token = nil)
     uri = URI(url)
   rescue ArgumentError
     raise InvalidRepository
@@ -81,7 +87,14 @@ class WebController < ApplicationController
       raise InvalidRepository
     end
 
-    Api::Github::Rest.new(uri.path).contributors(3)
+    begin
+      Api::Github::Rest.new(uri.path, oauth_token).contributors(3)
+    rescue Api::Github::Rest::InvalidRepository
+      raise self::InvalidRepository
+    rescue Api::Github::Rest::InvalidOAuthToken
+      raise self::InvalidOAuthToken
+    end
+
 
     # %w[me_name русске_имя äåãøáæ] # stub for development
   end
