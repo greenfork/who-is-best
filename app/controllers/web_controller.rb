@@ -3,6 +3,7 @@ require 'zip'
 class WebController < ApplicationController
   class InvalidName < RuntimeError; end
   class SessionMissing < RuntimeError; end
+  class InvalidRepository < RuntimeError; end
 
   def index
     reset_session
@@ -14,9 +15,14 @@ class WebController < ApplicationController
     if session[:search_url] == url_params[:repository]
       @contributors = session[:contributors]
     else
-      @contributors = search_contributors(url_params[:repository])
-      session[:contributors] = @contributors
-      session[:search_url] = url_params[:repository]
+      begin
+        @contributors = search_contributors(url_params[:repository])
+      rescue InvalidRepository
+        @contributors = []
+      else
+        session[:contributors] = @contributors
+        session[:search_url] = url_params[:repository]
+      end
     end
 
     @url = url_params[:repository]
@@ -65,7 +71,15 @@ class WebController < ApplicationController
   end
 
   def search_contributors(url)
-    %w[me_name русске_имя äåãøáæ]
+    uri = URI(url)
+
+    if uri.host != 'github.com' || uri.path !~ %r{^/\w+/\w+/?$}
+      raise InvalidRepository
+    end
+
+    Api::Github::Rest.new(uri.path).contributors(3)
+
+    # %w[me_name русске_имя äåãøáæ] # stub for development
   end
 
   def generate_zipped_certificates(names)
