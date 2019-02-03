@@ -6,8 +6,23 @@ module Pdf
     FONT_PATH = 'resources/LiberationSerif-Regular.ttf'.freeze
 
     class << self
-      # Generates a certificate with the given +name+ and +number+. Optionally
-      # accepts the +filename+ and +font+ with the paths from project root.
+      ##
+      # Generates a certificate and either creates a PDF file or returns
+      # a stream with this PDF file.
+      #
+      # * +name+ - This string will appear in the center of the certificate.
+      # * +number+ - This string will appear in the center of the certificate
+      #   prepended with a '#' sign.
+      # * +filename+ - The path and name of the file when +as_file+
+      #   option is specified.
+      # * +as_file+ - If this is set to true, then the function returns
+      #   +nil+ and the file with +filename+ is generated. If this is set
+      #   to false, then the function returns the stream and no file is
+      #   generated. True by default.
+      # * +font+ - Path to the font or one of the standard fonts defined
+      #   for PDF format like 'Helvetica', 'Courier', etc. Defaults to
+      #   +FONT_PATH+.
+
       def generate(name, number, filename: nil, as_file: true,
                    font: FONT_PATH)
         filename ||= "#{name}_#{number}.pdf"
