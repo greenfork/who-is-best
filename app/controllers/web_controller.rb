@@ -14,7 +14,7 @@ class WebController < ApplicationController
 
     # Store @contributors for every session in order to cache
     # the query sent to the specified github repository.
-    if session[:search_url] == repo
+    if session[:search_url] == repo && !repo.blank?
       @contributors = session[:contributors]
     else
       begin
@@ -74,7 +74,9 @@ class WebController < ApplicationController
 
   def search_contributors(url)
     uri = URI(url)
-
+  rescue ArgumentError
+    raise InvalidRepository
+  else
     if uri.host != 'github.com' || uri.path !~ %r{^/\w+/\w+/?$}
       raise InvalidRepository
     end
