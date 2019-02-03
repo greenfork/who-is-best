@@ -22,12 +22,17 @@ module Pdf
       # * +font+ - Path to the font or one of the standard fonts defined
       #   for PDF format like 'Helvetica', 'Courier', etc. Defaults to
       #   +FONT_PATH+.
+      # * +page_size+ - This string describes the page size using a
+      #   name of the standard format such as 'LETTER', 'A4', etc.
+      #   Defaults to +PAGE_SIZE+.
+      # * +page_layout+ - This symbol describes the page layout and can
+      #   be either +:portrait+ or +:landscape+. Defaults to +PAGE_LAYOUT+.
 
-      def generate(name, number, filename: nil, as_file: true,
-                   font: FONT_PATH)
+      def generate(name, number, filename: nil, as_file: true, font: FONT_PATH,
+                   page_size: PAGE_SIZE, page_layout: PAGE_LAYOUT)
         filename ||= "#{name}_#{number}.pdf"
-        options = { page_size: PAGE_SIZE,
-                    page_layout: PAGE_LAYOUT }
+        options = { page_size: page_size,
+                    page_layout: page_layout }
 
         pdf = Prawn::Document.new(options)
         pdf.font font
