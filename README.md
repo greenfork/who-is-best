@@ -10,6 +10,21 @@ you can send them their personal certificates of being the bestest.
 
 * Docker (optionally)
 
+## Deployment
+For Heroku:
+
+* Set `GITHUB_OAUTH_TOKEN` environment variable to your token that can
+  be acquired [here][1]. It is used to increase per hour requests from
+  60 for anonymous users up to 5000 and requires no checkboxes to be
+  checked when setting. If not set or set incorrectly, defaults to
+  anonymous usage.
+
+* Choose heroku/ruby buildpack
+
+* Deploy
+
+[1]: https://github.com/settings/tokens
+
 ## Development
 Start developing with this:
 
