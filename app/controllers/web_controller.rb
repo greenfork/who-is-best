@@ -1,6 +1,5 @@
 class WebController < ApplicationController
-  class InvalidFilename < RuntimeError; end
-  TMP_DIR = '/tmp'.freeze
+  class InvalidName < RuntimeError; end
 
   def index
     reset_session
@@ -20,12 +19,15 @@ class WebController < ApplicationController
     @url = url_params[:repository]
   end
 
+  # Receives a name and a number, and serves an appropriate certificate.
   def download
-    filename = download_params
-  rescue InvalidFilename
-    redirect_to web_show_path
+    name, number = download_params
+    filename = name + '.pdf'
+    pdf_string = Pdf::Certificate.generate(name, number, as_file: false)
+  rescue InvalidName
+    redirect_to root_path
   else
-    send_file filename, type: 'application/pdf'
+    send_data pdf_string, filename: filename, type: :pdf
   end
 
   private
@@ -35,15 +37,18 @@ class WebController < ApplicationController
   end
 
   def download_params
-    if params[:filename].blank? || params[:format] != 'pdf'
-      raise InvalidFilename
+    found = false
+    name_and_number = session[:contributors].each_with_index do |c, index|
+      name = c.symbolize_keys[:name]
+      if name == params[:name]
+        found = true
+        return [name, index + 1]
+      end
     end
 
-    filename = params[:filename] + '.' + params[:format]
-    path = File.join(TMP_DIR, filename)
-    raise InvalidFilename unless File.exist?(path)
+    raise InvalidName unless found
 
-    path
+    name_and_number
   end
 
   def search_contributors
