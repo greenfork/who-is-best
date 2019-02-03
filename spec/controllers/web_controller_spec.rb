@@ -18,12 +18,21 @@ RSpec.describe WebController, type: :controller do
     let(:repository) { 'https://github.com/jyp/boon' }
     let(:contributors) { %w[name русске_имя äåãøáæ] }
     let(:valid_params) { { repository: repository } }
+    let(:invalid_params_array) do
+      [
+        {},
+        { repository: '' },
+        { repository: 'https://github.com/jyp/boon/repo' },
+        { repository: 'https://meme.me/jyp/boon' }
+      ]
+    end
     let(:cached_session) { { contributors: contributors,
                              search_url: repository } }
 
     before(:example) do
-      # FIXME: stub the underlying library call instead
-      allow(subject).to receive(:search_contributors) { contributors }
+      allow_any_instance_of(Api::Github::Rest).to(
+        receive(:contributors) { contributors }
+      )
     end
 
     it 'returns http success' do
@@ -47,6 +56,16 @@ RSpec.describe WebController, type: :controller do
         get :show, params: valid_params
         expect(subject).not_to receive(:search_contributors)
         get :show, params: valid_params
+      end
+    end
+
+    context 'with invalid parameters' do
+      it 'does not assign values for view' do
+        invalid_params_array do |invalid_params|
+          get :show, params: invalid_params
+          expect(assigns(:contributors)).to eq([])
+          expect(assigns(:url)).to be_nil
+        end
       end
     end
   end
