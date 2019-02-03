@@ -13,7 +13,7 @@ class WebController < ApplicationController
     if session[:search_url] == url_params[:repository]
       @contributors = session[:contributors]
     else
-      @contributors = search_contributors
+      @contributors = search_contributors(url_params[:repository])
       session[:contributors] = @contributors
       session[:search_url] = url_params[:repository]
     end
@@ -59,7 +59,7 @@ class WebController < ApplicationController
     name_and_number
   end
 
-  def search_contributors
+  def search_contributors(url)
     %w[me_name русске_имя äåãøáæ]
   end
 
