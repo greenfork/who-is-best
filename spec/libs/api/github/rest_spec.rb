@@ -43,15 +43,4 @@ RSpec.describe Api::Github::Rest do
       end
     end
   end
-
-  context 'with invalid repository address' do
-    let(:repo) { 'me' }
-
-    it 'returns nil' do
-      client = class_double('RestClient', get: nil)
-      rest = described_class.new(repo, nil, client)
-      expect { rest.contributors }.not_to raise_error
-      expect(rest.contributors).to be_nil
-    end
-  end
 end
