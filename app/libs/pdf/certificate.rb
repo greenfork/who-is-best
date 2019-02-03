@@ -29,13 +29,18 @@ module Pdf
         options = { page_size: PAGE_SIZE,
                     page_layout: PAGE_LAYOUT }
 
-        Prawn::Document.generate(filename, options) do |d|
-          d.font font
-          d.move_down 100
-          d.text "##{number}", align: :center, size: 128, color: 'FF0000'
-          d.text name, align: :center, size: 60
-          d.move_down 20
-          d.text cheerup_phrase, align: :center, size: 48
+        pdf = Prawn::Document.new(options)
+        pdf.font font
+        pdf.move_down 100
+        pdf.text "##{number}", align: :center, size: 128, color: 'FF0000'
+        pdf.text name, align: :center, size: 60
+        pdf.move_down 20
+        pdf.text cheerup_phrase, align: :center, size: 48
+
+        if as_file
+          pdf.render_file filename
+        else
+          pdf.render
         end
       end
 
