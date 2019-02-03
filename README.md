@@ -16,7 +16,7 @@ Start developing with this:
 ``` shell
 $ git clone https://github.com/greenfork/who-is-bestest.git
 $ cd who-is-bestest
-$ bundle
+$ bundle --without production
 $ rails spec
 $ rails server # visit localhost:3000
 ```
