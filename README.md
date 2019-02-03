@@ -4,6 +4,18 @@ This web-site will show the bestest people on Github. Just copy the
 repository link and see who is the most active on this repo, optionally
 you can send them their personal certificates of being the bestest.
 
+## Application structure
+
+* `app/controllers/web_controller.rb`
+  - `index` - just show the home page
+  - `show` - show the search query results
+  - `download` - download a specified certificate
+  - `download_all` - download all certificates in a zip
+* `app/libs/api/github/rest.rb` - library for sending REST requests
+  to Github API
+* `app/libs/pdf/certificate.rb` - library for creating PDF certificates
+* `spec/` - all the test in the world
+
 ## Prerequisites
 
 * Ruby v2.5+
