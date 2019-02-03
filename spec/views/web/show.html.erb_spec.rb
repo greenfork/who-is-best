@@ -9,10 +9,8 @@ RSpec.describe 'web/show.html.erb', type: :view do
   context 'with the contributors present' do
     let(:names) { %w[me mi mo] }
 
-    before(:context) do
-      assign(:contributors, [{ name: 'me' },
-                             { name: 'mi' },
-                             { name: 'mo' }])
+    before(:example) do
+      assign(:contributors, names)
     end
 
     it 'has a name and a link for every contributor' do
