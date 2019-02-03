@@ -10,18 +10,20 @@ class WebController < ApplicationController
   end
 
   def show
+    repo = url_params[:repository]
+
     # Store @contributors for every session in order to cache
     # the query sent to the specified github repository.
-    if session[:search_url] == url_params[:repository]
+    if session[:search_url] == repo
       @contributors = session[:contributors]
     else
       begin
-        @contributors = search_contributors(url_params[:repository])
+        @contributors = search_contributors(repo)
       rescue InvalidRepository
         @contributors = []
       else
         session[:contributors] = @contributors
-        session[:search_url] = url_params[:repository]
+        session[:search_url] = repo
       end
     end
 
