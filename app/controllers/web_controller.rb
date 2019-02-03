@@ -30,6 +30,11 @@ class WebController < ApplicationController
     send_data pdf_string, filename: filename, type: :pdf
   end
 
+  def download_all
+    zip_archive = 'some zip archive'
+    send_data zip_archive, filename: 'download.zip', type: :zip
+  end
+
   private
 
   def url_params
