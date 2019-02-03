@@ -21,7 +21,7 @@ module Api
       def initialize(repo, oauth_token = nil, client = RestClient)
         @client = client
         slash = repo[0] == '/' ? '' : '/'
-        @url = BASE_URL + slash + repo
+        @url = BASE_URL + slash + repo.chomp('/')
         @headers = { accept: ACCEPT }
         unless oauth_token.blank?
           @headers[:authorization] = "token #{oauth_token}"
