@@ -9,13 +9,13 @@
         Done! You can also download the special certificates that acknowledge the true
         bestness of these beings. Here are the 3 best contributors for this repo:
     </p>
-    <% @contributors.each do |c| %>
+    <% @contributors.each do |name| %>
         <div class="row">
             <div class="three columns">
-                <%= c[:name] %>
+                <%= name %>
             </div>
             <div class="nine columns">
-                <%= link_to c[:name] + '.pdf', download_path(c[:name]),
+                <%= link_to name + '.pdf', download_path(name),
                     data: { turbolinks: false } %>
             </div>
         </div>

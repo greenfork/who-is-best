@@ -9,7 +9,7 @@ class WebController < ApplicationController
     # Store @contributors for every session in order to cache
     # the query sent to the specified github repository.
     if session[:search_url] == url_params[:repository]
-      @contributors = session[:contributors].map(&:symbolize_keys)
+      @contributors = session[:contributors]
     else
       @contributors = search_contributors
       session[:contributors] = @contributors
@@ -38,8 +38,7 @@ class WebController < ApplicationController
 
   def download_params
     found = false
-    name_and_number = session[:contributors].each_with_index do |c, index|
-      name = c.symbolize_keys[:name]
+    name_and_number = session[:contributors].each_with_index do |name, index|
       if name == params[:name]
         found = true
         return [name, index + 1]
@@ -52,8 +51,6 @@ class WebController < ApplicationController
   end
 
   def search_contributors
-    [{ name: 'me' },
-     { name: 'mi' },
-     { name: 'mo' }]
+    %w[me_name русске_имя äåãøáæ]
   end
 end
