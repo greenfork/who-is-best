@@ -1,4 +1,4 @@
-# Who is bestest?
+# Who is Bestest?
 
 This web-site will show the bestest people on Github. Just copy the
 repository link and see who is the most active on this repo, optionally
