@@ -1,14 +1,18 @@
 module Pdf
   # Creates Certificates in the pdf format.
   class Certificate
+    PAGE_SIZE = 'A4'.freeze
+    PAGE_LAYOUT = :portrait
+    FONT_PATH = 'resources/LiberationSerif-Regular.ttf'.freeze
+
     class << self
       # Generates a certificate with the given +name+ and +number+. Optionally
       # accepts the +filename+ and +font+ with the paths from project root.
-      def generate(name, number, filename: nil,
-                   font: 'resources/LiberationSerif-Regular.ttf')
+      def generate(name, number, filename: nil, as_file: true,
+                   font: FONT_PATH)
         filename ||= "#{name}_#{number}.pdf"
-        options = { page_size: 'A4',
-                    page_layout: :portrait }
+        options = { page_size: PAGE_SIZE,
+                    page_layout: PAGE_LAYOUT }
 
         Prawn::Document.generate(filename, options) do |d|
           d.font font
