@@ -1,3 +1,5 @@
+require 'zip'
+
 class WebController < ApplicationController
   class InvalidName < RuntimeError; end
 
@@ -31,7 +33,9 @@ class WebController < ApplicationController
   end
 
   def download_all
-    zip_archive = 'some zip archive'
+    redirect_to(root_path) && return if session[:contributors].blank?
+
+    zip_archive = generate_zipped_certificates(session[:contributors])
     send_data zip_archive, filename: 'download.zip', type: :zip
   end
 
@@ -57,5 +61,16 @@ class WebController < ApplicationController
 
   def search_contributors
     %w[me_name русске_имя äåãøáæ]
+  end
+
+  def generate_zipped_certificates(names)
+    zip_buffer = Zip::OutputStream.write_buffer do |buff|
+      names.each_with_index do |name, index|
+        buff.put_next_entry name + '.pdf'
+        buff << Pdf::Certificate.generate(name, index + 1, as_file: false)
+      end
+    end
+    zip_buffer.rewind
+    zip_buffer.read
   end
 end
