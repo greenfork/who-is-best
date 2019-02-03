@@ -2,3 +2,11 @@
   text-align: center;
   margin: auto;
 }
+
+h1 a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+}
