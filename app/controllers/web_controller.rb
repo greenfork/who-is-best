@@ -2,6 +2,7 @@ require 'zip'
 
 class WebController < ApplicationController
   class InvalidName < RuntimeError; end
+  class SessionMissing < RuntimeError; end
 
   def index
     reset_session
@@ -28,6 +29,8 @@ class WebController < ApplicationController
     pdf_string = Pdf::Certificate.generate(name, number, as_file: false)
   rescue InvalidName
     redirect_to root_path
+  rescue SessionMissing
+    redirect_to root_path
   else
     send_data pdf_string, filename: filename, type: :pdf
   end
@@ -46,6 +49,8 @@ class WebController < ApplicationController
   end
 
   def download_params
+    raise SessionMissing if session[:contributors].blank?
+
     found = false
     name_and_number = session[:contributors].each_with_index do |name, index|
       if name == params[:name]
