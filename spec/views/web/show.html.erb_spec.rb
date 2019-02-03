@@ -8,19 +8,19 @@ RSpec.describe 'web/show.html.erb', type: :view do
 
   context 'with the contributors present' do
     let(:names) { %w[me mi mo] }
-    let(:urls)  { %w[url1 url2 url3] }
+    let(:filenames)  { %w[filename1 filename2 filename3] }
 
     before(:context) do
-      assign(:contributors, [{ name: 'me', url: 'url1' },
-                             { name: 'mi', url: 'url2' },
-                             { name: 'mo', url: 'url3' }])
+      assign(:contributors, [{ name: 'me', filename: 'filename1' },
+                             { name: 'mi', filename: 'filename2' },
+                             { name: 'mo', filename: 'filename3' }])
     end
 
     it 'has a name and a link for every contributor' do
       render
-      names.zip(urls).each do |name, url|
+      names.zip(filenames).each do |name, filename|
         expect(rendered).to match(name)
-        expect(rendered).to match(url)
+        expect(rendered).to match(filename)
       end
     end
 
