@@ -1,24 +1,24 @@
-# README
+# Who is bestest?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This web-site will show the bestest people on Github. Just copy the
+repository link and see who is the most active on this repo, optionally
+you can send them their personal certificates of being the bestest.
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+Ruby v2.5+
 
-* System dependencies
+## Development
 
-* Configuration
+``` shell
+$ git clone https://github.com/greenfork/who-is-bestest.git
+$ bundle
+$ rails spec
+$ rails server
+```
 
-* Database creation
+## License
 
-* Database initialization
+Copyright © 2019 Dmitriy Matveyev
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Distributed under the MIT license, see LICENSE file.
