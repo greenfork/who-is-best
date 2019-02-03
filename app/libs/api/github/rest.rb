@@ -2,6 +2,9 @@ module Api
   module Github
     # Gets the publicly available data via the REST Github API v3.
     class Rest
+      class InvalidOAuthToken < RuntimeError; end
+      class InvalidRepository < RuntimeError; end
+
       ACCEPT = 'application/vnd.github.v3+json'.freeze
       BASE_URL = 'https://api.github.com/repos'.freeze
       CONTRIBS_PATH = '/contributors'.freeze
@@ -16,7 +19,12 @@ module Api
       #
       # * +oauth_token+ - personal github authentication token used to
       #   increase the maximum requests per hour from 60 to 5000,
-      #   requires no special access permissions.
+      #   requires no special access permissions. Default is nil.
+      #
+      # Throws:
+      # * +InvalidOAuthToken+ - If +oauth_token+ can not be used
+      #   for authorization.
+      # * +InvalidRepository+ - When the repository can not be found.
 
       def initialize(repo, oauth_token = nil, client = RestClient)
         @client = client
@@ -34,8 +42,10 @@ module Api
         url = @url + CONTRIBS_PATH
         response = @client.get(url, @headers)
         JSON.parse(response)[0...number].map { |h| h['login'] }
-      rescue
-        nil
+      rescue RestClient::Unauthorized
+        raise InvalidOAuthToken
+      rescue RestClient::NotFound
+        raise InvalidRepository
       end
     end
   end
