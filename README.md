@@ -6,15 +6,15 @@ you can send them their personal certificates of being the bestest.
 
 ## Application structure
 
-* `app/controllers/web_controller.rb`
+* `app/controllers/web_controller.rb` - all the main app logic
   - `index` - just show the home page
   - `show` - show the search query results
   - `download` - download a specified certificate
   - `download_all` - download all certificates in a zip
-* `app/libs/api/github/rest.rb` - library for sending REST requests
-  to Github API
-* `app/libs/pdf/certificate.rb` - library for creating PDF certificates
-* `spec/` - all the test in the world
+* `app/libs/api/github/rest.rb` - library for retrieving the most active contributors
+  of the given Github repository
+* `app/libs/pdf/certificate.rb` - library for creating PDF certificates for contributors
+* `spec/` - all the tests in the world
 
 ## Prerequisites
 
