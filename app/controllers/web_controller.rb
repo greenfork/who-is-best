@@ -23,9 +23,9 @@ class WebController < ApplicationController
       rescue InvalidRepository
         @contributors = []
       rescue InvalidOAuthToken
-        logger.warn 'GITHUB_OAUTH_TOKEN environment variable can not be used' +
-                    ' for authentication to Github API. Please, fix it' +
-                    ' or request a new one.'
+        logger.warn "\nGITHUB_OAUTH_TOKEN environment variable can not be used" +
+                    " for authentication to Github API.\nPlease, fix it" +
+                    " or request a new one.\n"
         @contributors = search_contributors(repo)
       else
         session[:contributors] = @contributors
@@ -90,9 +90,9 @@ class WebController < ApplicationController
     begin
       Api::Github::Rest.new(uri.path, oauth_token).contributors(3)
     rescue Api::Github::Rest::InvalidRepository
-      raise self::InvalidRepository
+      raise InvalidRepository
     rescue Api::Github::Rest::InvalidOAuthToken
-      raise self::InvalidOAuthToken
+      raise InvalidOAuthToken
     end
 
 
