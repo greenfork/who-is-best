@@ -9,16 +9,18 @@
         Done! You can also download the special certificates that acknowledge the true
         bestness of these beings. Here are the 3 best contributors for this repo:
     </p>
-    <% @contributors.each do |name| %>
-        <div class="row">
-            <div class="three columns">
-                <%= name %>
+    <section id="downloads">
+        <% @contributors.each do |name| %>
+            <div class="row">
+                <div class="three columns">
+                    <%= name %>
+                </div>
+                <div class="nine columns">
+                    <%= link_to name + '.pdf', download_path(name),
+                        data: { turbolinks: false } %>
+                </div>
             </div>
-            <div class="nine columns">
-                <%= link_to name + '.pdf', download_path(name),
-                    data: { turbolinks: false } %>
-            </div>
-        </div>
-    <% end %>
-    <%= link_to 'download.zip', download_all_path, data: { turbolinks: false } %>
+        <% end %>
+        <%= link_to 'download.zip', download_all_path, data: { turbolinks: false } %>
+    </section>
 <% end %>
