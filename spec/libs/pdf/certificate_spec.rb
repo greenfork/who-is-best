@@ -15,15 +15,21 @@ RSpec.describe Pdf::Certificate do
   after(:example) { File.delete(filename) if File.exist?(filename) }
 
   context 'with valid arguments' do
-    it 'generates a pdf file' do
-      described_class.generate(name, number, filename: filename)
+    it 'generates a PDF file' do
+      rs = described_class.generate(name, number, filename: filename)
       expect(File.exist?(filename)).to be true
+      expect(rs).to be_nil
     end
 
     it 'allows to change the font' do
       described_class.generate(name, number, filename: filename,
                                font: 'Helvetica')
       expect(File.exist?(filename)).to be true
+    end
+
+    it 'generates a string representation of a PDF file' do
+      str = described_class.generate(name, number, as_file: false)
+      expect(str).to be_instance_of(String)
     end
   end
 
