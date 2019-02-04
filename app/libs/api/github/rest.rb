@@ -5,6 +5,7 @@ module Api
       class InvalidOAuthToken < RuntimeError; end
       class InvalidRepository < RuntimeError; end
 
+      # HTTP header as documented by Github API v3 reference
       ACCEPT = 'application/vnd.github.v3+json'.freeze
       BASE_URL = 'https://api.github.com/repos'.freeze
       CONTRIBS_PATH = '/contributors'.freeze
@@ -19,13 +20,7 @@ module Api
       #
       # * +oauth_token+ - personal github authentication token used to
       #   increase the maximum requests per hour from 60 to 5000,
-      #   requires no special access permissions. Default is nil.
-      #
-      # Throws:
-      # * +InvalidOAuthToken+ - If +oauth_token+ can not be used
-      #   for authorization.
-      #
-      # * +InvalidRepository+ - When the repository can not be found.
+      #   requires no special access permissions. Default is +nil+.
 
       def initialize(repo, oauth_token = nil, client = RestClient)
         @client = client
@@ -37,8 +32,16 @@ module Api
         end
       end
 
+      ##
       # Prints at most +number+ names of the most active contributors,
-      # 3 by default. On any exception returns +nil+.
+      # 3 by default.
+      #
+      # Throws:
+      # * +InvalidOAuthToken+ - If +oauth_token+ can not be used
+      #   for authorization.
+      #
+      # * +InvalidRepository+ - When the repository can not be found.
+
       def contributors(number = 3)
         url = @url + CONTRIBS_PATH
         response = @client.get(url, @headers)
