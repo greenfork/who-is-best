@@ -8,7 +8,7 @@ module Pdf
     class << self
       ##
       # Generates a certificate and either creates a PDF file or returns
-      # a stream with this PDF file.
+      # a string with this PDF file.
       #
       # * +name+ - This string will appear in the center of the certificate.
       #
@@ -20,7 +20,7 @@ module Pdf
       #
       # * +as_file+ - If this is set to true, then the function returns
       #   +nil+ and the file with +filename+ is generated. If this is set
-      #   to false, then the function returns the stream and no file is
+      #   to false, then the function returns the string and no file is
       #   generated. True by default.
       #
       # * +font+ - Path to the font or one of the standard fonts defined
