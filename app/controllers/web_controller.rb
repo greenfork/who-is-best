@@ -79,6 +79,11 @@ class WebController < ApplicationController
   end
 
   def search_contributors(url, oauth_token = nil)
+    ## stub for development
+    # contributors = %w[me_name русске_имя äåãøáæ]
+    # session[:contributors] = %w[me_name русске_имя äåãøáæ]
+    # return contributors
+
     uri = URI(url)
   rescue ArgumentError, URI::InvalidURIError
     raise InvalidRepository
@@ -94,9 +99,6 @@ class WebController < ApplicationController
     rescue Api::Github::Rest::InvalidOAuthToken
       raise InvalidOAuthToken
     end
-
-
-    # %w[me_name русске_имя äåãøáæ] # stub for development
   end
 
   def generate_zipped_certificates(names)
