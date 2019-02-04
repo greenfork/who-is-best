@@ -16,6 +16,16 @@ you can send them their personal certificates of being the bestest.
 * `app/libs/pdf/certificate.rb` - library for creating PDF certificates for contributors
 * `spec/` - all the tests in the world
 
+## Technology stack
+
+* [Ruby on Rails] - most popular Ruby web-framework out there
+* [Prawn] - PDF generating library
+* [Rest-client] - library to send REST requests
+
+[Ruby on Rails]: https://github.com/rails/rails
+[Prawn]: https://github.com/prawnpdf/prawn
+[Rest-client]: https://github.com/rest-client/rest-client
+
 ## Prerequisites
 
 * Ruby v2.5+
