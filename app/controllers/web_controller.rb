@@ -23,8 +23,8 @@ class WebController < ApplicationController
       rescue InvalidRepository
         @contributors = []
       rescue InvalidOAuthToken
-        logger.warn "\nGITHUB_OAUTH_TOKEN environment variable can not be used" +
-                    " for authentication to Github API.\nPlease, fix it" +
+        logger.warn "\nGITHUB_OAUTH_TOKEN environment variable can not be" \
+                    " used for authentication to Github API.\nPlease, fix it" \
                     " or request a new one.\n"
         @contributors = search_contributors(repo)
       else
