@@ -80,7 +80,7 @@ class WebController < ApplicationController
 
   def search_contributors(url, oauth_token = nil)
     uri = URI(url)
-  rescue ArgumentError
+  rescue ArgumentError, URI::InvalidURIError
     raise InvalidRepository
   else
     if uri.host != 'github.com' || uri.path !~ %r{^/\w+/\w+/?$}
