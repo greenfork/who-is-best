@@ -23,7 +23,8 @@ RSpec.describe WebController, type: :controller do
         {},
         { repository: '' },
         { repository: 'https://github.com/jyp/boon/repo' },
-        { repository: 'https://meme.me/jyp/boon' }
+        { repository: 'https://meme.me/jyp/boon' },
+        { repository: '" onfocus="alert(1)" autofocus="' }
       ]
     end
     let(:cached_session) { { contributors: contributors,
