@@ -19,6 +19,7 @@ class WebController < ApplicationController
       @contributors = session[:contributors]
     else
       begin
+        # Send a request to the external API.
         @contributors = search_contributors(repo, ENV['GITHUB_OAUTH_TOKEN'])
       rescue InvalidRepository
         @contributors = []
